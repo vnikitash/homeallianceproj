@@ -19,4 +19,8 @@ then
     exit 1;
 fi
 
+mkdir tests/acceptance
+mkdir tests/unit
+mkdir tests/functional
+
 php vendor/bin/codecept run -d
