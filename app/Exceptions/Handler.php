@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -39,17 +42,33 @@ class Handler extends ExceptionHandler
         parent::report($exception);
     }
 
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Exception
-     */
-    public function render($request, Exception $exception)
+
+    public function render($request, Exception $exception): JsonResponse
     {
-        return parent::render($request, $exception);
+        $message = $exception->getMessage();
+
+        $code = $exception->getCode();
+
+        if ($exception instanceof ValidationException) {
+            $message = '';
+
+            foreach ($exception->errors() as $field => $error) {
+                $message .= implode(",", $error). " ";
+            }
+
+            $code = Response::HTTP_BAD_REQUEST;
+        }
+
+        $responseData = [
+            'message' => $message
+        ];
+
+        //For production we are not showing users file and line
+        if (env('APP_ENV') !== 'production') {
+            $responseData['file'] = $exception->getFile();
+            $responseData['line'] = $exception->getLine();
+        }
+
+        return response()->json($responseData, $code);
     }
 }

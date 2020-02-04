@@ -1,0 +1,10 @@
+actor: ApiTester
+modules:
+    enabled:
+        - REST:
+            url: http://localhost
+            depends: Laravel5
+            part: Json
+        - Laravel5:
+            environment_file: .env
+            cleanup: true

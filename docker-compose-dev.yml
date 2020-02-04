@@ -1,0 +1,46 @@
+version: '2'
+services:
+  db:
+    image: mysql:5.7
+    container_name: homealliance-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: homealliance
+      MYSQL_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+  php:
+    image: webdevops/php:7.4
+    container_name: homealliance-php
+    command: |
+        bash -c "ls -l && ls -l ./app && sh ./install_scripts/install.sh && supervisord"
+    volumes:
+      - "./:/app"
+    working_dir: '/app'
+  php_test:
+      image: webdevops/php:7.4
+      container_name: homealliance-php-tests
+      command: |
+          bash -c "ls -l && ls -l ./app && sh ./install_scripts/run_tests.sh"
+      volumes:
+        - "./:/app"
+      working_dir: '/app'
+  nginx:
+    depends_on:
+      - php
+    image: webdevops/nginx
+    container_name: homealliance-nginx
+    environment:
+      WEB_DOCUMENT_ROOT: /app/public
+      WEB_DOCUMENT_INDEX: index.php
+      WEB_PHP_SOCKET: php:9000
+    volumes:
+      - "./:/app"
+    ports:
+      - "80:80"
+  redis:
+    image: redis:latest
+    container_name: homealliance-redis
+    ports:
+      - "6379:6379"
