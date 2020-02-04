@@ -4,7 +4,7 @@ try=0;
 status=0;
 
 while true; do
-    php artisan migrate < /dev/null
+    php artisan passport:install < /dev/null
     if [ $? -eq 0 ] && [ $try -lt $tries ]; then
         status="200";
         break
