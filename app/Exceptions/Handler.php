@@ -45,8 +45,8 @@ class Handler extends ExceptionHandler
 
     public function render($request, Exception $exception): JsonResponse
     {
+        dd($exception);
         $message = $exception->getMessage();
-
         $code = $exception->getCode();
 
         if ($exception instanceof ValidationException) {
