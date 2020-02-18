@@ -26,16 +26,4 @@ class AuthController extends Controller
     {
         return response()->json($this->authService->login($request->toBag()));
     }
-
-    /**
-     * @param UserRegisterRequest $request
-     * @return JsonResponse
-     * @throws \App\Exceptions\UserAlreadyRegisteredException
-     */
-    public function register(UserRegisterRequest $request): JsonResponse
-    {
-        $status = $this->authService->register($request->toBag());
-
-        return response()->json(['status' => $status], ($status) ? Response::HTTP_CREATED : Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
 }

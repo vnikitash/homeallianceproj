@@ -19,5 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'AuthController@login')->name('auth.login');
-    Route::post('register', 'AuthController@register')->name('user.register');
 });

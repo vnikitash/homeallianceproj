@@ -31,10 +31,10 @@ class BaseDTO
      * @param Validatable $validatable
      * @param User $user
      */
-    public function __construct(Validatable $validatable, User $user = null)
+    public function __construct(Validatable $validatable = null, User $user = null)
     {
         $this->user = $user;
-        $this->arguments = $validatable->validated();
+        $this->arguments = $validatable ? $validatable->validated() : null;
     }
 
     /**

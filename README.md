@@ -3,19 +3,8 @@ What has been added:<br>
 - Services - We need them to have only 1 interface of business logic for the whole application. For example if we have mobile app, web app, cli scripts etc. We need to have the same features behaviour for each of them, like user registration etc<br>
 - Repositories - Third custom layer added for working ith CRUD operations, as good idea to have centralized place of working with data<br>
 - Localization - by the <b>Accept-Language</b> header you can chose language of the BackEnd app. This example has only two supported languages: <i>de</i> and <i>en</i><br>
-- API endpoints: register user, login user, get current user<br>
-For user registration send request via POSTman or whatever you want data to the next endpoint:<br>
-`POST http://localhost/api/register` <br>
-And send next data:
-```
-{
-   	"email": "demo@user.example",
-   	"password": "password",
-   	"password_confirmation": "password",
-   	"first_name": "Viktor",
-   	"last_name": "Nikitash"
-}
-```
+- API endpoints: login user, get current user<br>
+
 For login:
 `POST http://localhost/api/login` <br>
 And send next data:
