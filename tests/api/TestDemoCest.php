@@ -9,7 +9,7 @@ class TestDemoCest
     public function testLoginUser(ApiTester $I)
     {
         $I->sendPOST('/api/login', [
-            'email' => 'admin@srtyber.com',
+            'email' => 'admin@stryber.com',
             'password' => 'Qweqwe'
         ]);
 
@@ -21,10 +21,10 @@ class TestDemoCest
     public function testUserInfoRequest(ApiTester $I)
     {
 
-        $user = \App\User::query()->where('email', 'admin@srtyber.com')->first();
+        $user = \App\User::query()->where('email', 'admin@stryber.com')->first();
 
         $I->sendPOST('/api/login', [
-            'email' => 'admin@srtyber.com',
+            'email' => 'admin@stryber.com',
             'password' => 'Qweqwe'
         ]);
 
