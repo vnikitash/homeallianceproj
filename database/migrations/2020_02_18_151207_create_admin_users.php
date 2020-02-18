@@ -11,15 +11,18 @@ class CreateAdminUsers extends Migration
      */
     public function up()
     {
-        $userDTO = new \App\DTO\User\UserRegisterDTO();
-        $userDTO->setFirstName("Admin");
-        $userDTO->setLastName("Adminovich");
-        $userDTO->setPassword("Qweqwe");
-        $userDTO->setEmail("admin@stryber.com");
+        if (env('APP_ENV') !== 'production') {
+            $userDTO = new \App\DTO\User\UserRegisterDTO();
+            $userDTO->setFirstName("Admin");
+            $userDTO->setLastName("Adminovich");
+            $userDTO->setPassword("Qweqwe");
+            $userDTO->setEmail("admin@stryber.com");
 
-        /** @var \App\Http\Services\AuthService $authService */
-        $authService = app(\App\Http\Services\AuthService::class);
-        $authService->register($userDTO);
+            /** @var \App\Http\Services\AuthService $authService */
+            $authService = app(\App\Http\Services\AuthService::class);
+            $authService->register($userDTO);
+        }
+
     }
 
     /**
@@ -29,6 +32,8 @@ class CreateAdminUsers extends Migration
      */
     public function down()
     {
-        \App\User::query()->where('email', 'admin@srtyber.com')->delete();
+        if (env('APP_ENV') !== 'production') {
+            \App\User::query()->where('email', 'admin@stryber.com')->delete();
+        }
     }
 }
