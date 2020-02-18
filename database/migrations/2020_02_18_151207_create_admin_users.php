@@ -15,7 +15,7 @@ class CreateAdminUsers extends Migration
         $userDTO->setFirstName("Admin");
         $userDTO->setLastName("Adminovich");
         $userDTO->setPassword("Qweqwe");
-        $userDTO->setEmail("admin@srtyber.com");
+        $userDTO->setEmail("admin@stryber.com");
 
         /** @var \App\Http\Services\AuthService $authService */
         $authService = app(\App\Http\Services\AuthService::class);

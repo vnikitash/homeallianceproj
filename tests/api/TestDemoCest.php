@@ -8,31 +8,30 @@ class TestDemoCest
 
     public function testLoginUser(ApiTester $I)
     {
-
         $I->sendPOST('/api/login', [
-            'email' => 'admin@stryber.com',
+            'email' => 'admin@srtyber.com',
             'password' => 'Qweqwe'
         ]);
 
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Illuminate\Http\Response::HTTP_OK);
-        $I->seeResponseJsonMatchesJsonPath('$.accessToken');
+        $I->seeResponseJsonMatchesJsonPath('$.token');
     }
 
     public function testUserInfoRequest(ApiTester $I)
     {
 
-        $user = \App\User::query()->where('email', 'admin@stryber.com')->first();
+        $user = \App\User::query()->where('email', 'admin@srtyber.com')->first();
 
         $I->sendPOST('/api/login', [
-            'email' => 'admin@stryber.com',
+            'email' => 'admin@srtyber.com',
             'password' => 'Qweqwe'
         ]);
 
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(\Illuminate\Http\Response::HTTP_OK);
 
-        $token = \Illuminate\Support\Arr::get(json_decode($I->grabResponse(), true), 'accessToken');
+        $token = \Illuminate\Support\Arr::get(json_decode($I->grabResponse(), true), 'token');
 
         $I->haveHttpHeader('Authorization', 'Bearer ' . $token);
         $I->sendGET('/api/user');
