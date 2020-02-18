@@ -29,7 +29,7 @@ class AuthService
      * @return PersonalAccessTokenResult
      * @throws AuthorizationErrorException
      */
-    public function login(UserLoginDTO $loginDTO): PersonalAccessTokenResult
+    public function login(UserLoginDTO $loginDTO): array
     {
         $user = $this->userRepository->findUserByEmail($loginDTO->getEmail());
 
@@ -41,7 +41,14 @@ class AuthService
         $token = $tokenResult->token;
         $token->save();
 
-        return $tokenResult;
+        return [
+            'token' => $tokenResult->accessToken,
+            'type' => 'Bearer',
+            "revoked" => $token->revoked,
+            "created_at" => $token->created_at,
+            "updated_at" => $token->updated_at,
+            "expires_at" => $token->expires_at,
+        ];
     }
 
     /**
